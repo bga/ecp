@@ -101,7 +101,8 @@ char *dirname(char *in, int len)
 
 void DrawProgressBar(double percent, unsigned int speed, char *file, char progresssign)
 {
-	int width = getWidth();
+	//# my tty needs one less char. Else \r does not work
+  int width = getWidth() - 1;
 	char speedbuffer[9];
 	GetSpeed(speed, speedbuffer);
 
@@ -189,7 +190,7 @@ void DrawProgressBar(double percent, unsigned int speed, char *file, char progre
 	
 }
 
-/*
+#if 0
 int main (int argc, char **argv) {
 	double i;
 	//printf("\e[?25l");
@@ -198,11 +199,14 @@ int main (int argc, char **argv) {
 	//DrawProgressBar(99.9, 962486234, "/usr/bin/path/blup");
 	for (i = 0; i <= 100; i+=0.5f)
 	{
-		DrawProgressBar(i, 962486234, "/usr/bin/path/blup");
-		usleep(10000);
+		if(1) DrawProgressBar(i, 962486234, "/usr/bin/path/blup", '#');
+		if(0) printf("\r%lf", i);
+    if(0) printf("\r %lf", i);
+    fflush(stdout);
+    usleep(10000);
     }
 	
     //printf("\e[?25h");
     return 0;
 }
-*/
+#endif
